@@ -15,7 +15,7 @@ import javax.inject.Singleton
 @Singleton
 interface AppComponent {
 
-    fun provideAlarmsComponent(dashboardModule: DashboardModule): DashboardComponent
+    fun provideDashboardComponent(dashboardModule: DashboardModule): DashboardComponent
 
     fun provideSettingsComponent(settingModule: SettingsModule): SettingsComponent
 
