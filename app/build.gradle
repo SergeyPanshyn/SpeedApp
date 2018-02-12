@@ -1,0 +1,100 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'realm-android'
+apply plugin: 'kotlin-kapt'
+
+// ========= For each new release, change here =========
+int VERSION_CODE = 1
+String VERSION_NAME = "0.0.1"
+// =====================================================
+
+String APK_NAME = "SpeedApp"
+project.archivesBaseName = APK_NAME + "-" + VERSION_CODE + "-" + VERSION_NAME
+
+android {
+    compileSdkVersion 27
+    defaultConfig {
+        applicationId "com.example.speedtest"
+        minSdkVersion 21
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        debug {
+            applicationIdSuffix ".debug"
+
+            matchingFallbacks = ['debug']
+
+            buildConfigField "String", "VERSION_TYPE", '"Develop"'
+
+            // when testing remember to try with Obfuscation and Shrinking mode ON
+            minifyEnabled false
+            shrinkResources false
+            debuggable true
+            zipAlignEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        pretest {
+            applicationIdSuffix ".pretest"
+
+            matchingFallbacks = ['pretest']
+
+            buildConfigField "String", "VERSION_TYPE", '"Pretest"'
+
+            // when testing remember to try with Obfuscation and Shrinking mode ON
+            minifyEnabled false
+            shrinkResources false
+            debuggable true
+            zipAlignEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        release {
+            applicationIdSuffix ".release"
+
+            matchingFallbacks = ['release']
+
+            buildConfigField "String", "VERSION_TYPE", '""'
+
+            // when testing remember to try with Obfuscation and Shrinking mode ON
+            minifyEnabled false
+            shrinkResources false
+            debuggable true
+            zipAlignEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    kapt {
+        generateStubs = true
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation"org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    implementation 'com.android.support:appcompat-v7:27.0.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    compile 'com.jakewharton:butterknife:8.7.0'
+    compile 'com.google.dagger:dagger:2.11'
+//    compile "com.google.dagger:dagger-android:2.11"
+//    compile "com.google.dagger:dagger-android-support:2.11"
+    compile 'io.reactivex:rxandroid:1.2.1'
+    compile 'io.reactivex:rxjava:1.3.0'
+    compile 'io.reactivex:rxkotlin:0.60.0'
+    kapt 'com.jakewharton:butterknife-compiler:8.5.1'
+    kapt 'com.google.dagger:dagger-compiler:2.11'
+//    kapt "com.google.dagger:dagger-android-processor:2.11"
+    compile 'com.github.PhilJay:MPAndroidChart:v3.0.2'
+}
+
+//kapt {
+//    generateStubs = true
+//}

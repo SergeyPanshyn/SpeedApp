@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Speed App</string>
+
+    <string name="speed_app_is_running">Checking your speed.</string>
+</resources>
