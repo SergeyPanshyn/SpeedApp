@@ -9,7 +9,7 @@ interface DashboardPresenter<T>: Presenter<T> {
 
     interface DashboardView {
 
-        fun showSpeed(speed: Float)
+        fun showSpeed(speed: Int)
 
     }
 

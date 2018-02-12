@@ -55,7 +55,7 @@ class DashboardFragment: Fragment(), DashboardPresenter.DashboardView {
         dashboardPresenter.subscribeToCurrentSpeed()
     }
 
-    override fun showSpeed(speed: Float) {
-        speedTv.text = speed.toInt().toString()
+    override fun showSpeed(speed: Int) {
+        speedTv.text = speed.toString()
     }
 }

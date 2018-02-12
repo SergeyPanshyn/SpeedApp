@@ -56,8 +56,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun runSpeedService() {
-        val speedServiceIntent = Intent(this, SpeedService::class.java)
-        startService(speedServiceIntent);
+        if (!SpeedService.IS_RUNNING) {
+            val speedServiceIntent = Intent(this, SpeedService::class.java)
+            startService(speedServiceIntent)
+        }
     }
 
     private fun checkLocationPermission() {
@@ -68,6 +70,8 @@ class MainActivity : AppCompatActivity() {
             } else {
                 ActivityCompat.requestPermissions(this, Array(1) { Manifest.permission.ACCESS_FINE_LOCATION }, LOCATION_REQUEST)
             }
+        } else {
+            runSpeedService()
         }
     }
 

@@ -9,7 +9,7 @@ import rx.Observable
 /**
  * Created by Sergey Panshyn on 12.02.2018.
  */
-class GetCurrentSpeedUseCase(subscibeOn: SubscribeOn, observeOn: ObserveOn, val speedCheckManager: SpeedCheckManager): UseCaseStream<Float>(subscibeOn, observeOn) {
-    override val useCaseObservable: Observable<Float>
+class GetCurrentSpeedUseCase(subscibeOn: SubscribeOn, observeOn: ObserveOn, val speedCheckManager: SpeedCheckManager): UseCaseStream<Int>(subscibeOn, observeOn) {
+    override val useCaseObservable: Observable<Int>
         get() = speedCheckManager.listenForSpeed()
 }

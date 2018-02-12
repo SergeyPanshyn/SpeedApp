@@ -20,7 +20,7 @@ class DashboardPresenterImpl<T: DashboardPresenter.DashboardView>(private val ge
     }
 
     override fun subscribeToCurrentSpeed() {
-        getCurrentSpeedUseCase.executeObservable(object : DefaultSubscriber<Float>(){
+        getCurrentSpeedUseCase.executeObservable(object : DefaultSubscriber<Int>(){
             override fun onCompleted() {
                 Log.d("onxGetSpeed", "Completed.")
             }
@@ -29,7 +29,7 @@ class DashboardPresenterImpl<T: DashboardPresenter.DashboardView>(private val ge
                 Log.d("onxGetSpeed", "Err: $e")
             }
 
-            override fun onNext(value: Float) {
+            override fun onNext(value: Int) {
                 view?.showSpeed(value)
             }
         })
