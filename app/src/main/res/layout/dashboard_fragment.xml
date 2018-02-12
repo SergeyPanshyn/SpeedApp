@@ -39,7 +39,7 @@
         app:layout_constraintBottom_toBottomOf="@id/speet_circle_iv"
         app:layout_constraintLeft_toLeftOf="@id/speet_circle_iv"
         app:layout_constraintRight_toRightOf="@id/speet_circle_iv"
-        app:layout_constraintVertical_bias="0.58"
+        app:layout_constraintVertical_bias="0.5"
         />
 
     <TextView
