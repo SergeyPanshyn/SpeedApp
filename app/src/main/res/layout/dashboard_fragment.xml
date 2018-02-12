@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/black">
+
+    <ImageView
+        android:id="@+id/speet_circle_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/speed_circle"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/speed_title"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textAlignment="center"
+        app:layout_constraintLeft_toLeftOf="@id/speet_circle_iv"
+        app:layout_constraintRight_toRightOf="@id/speet_circle_iv"
+        app:layout_constraintBottom_toTopOf="@+id/speed_tv"
+        />
+
+    <TextView
+        android:id="@+id/speed_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="200"
+        android:textColor="@color/light_blue_1"
+        android:textSize="48sp"
+        android:includeFontPadding="false"
+        app:layout_constraintTop_toTopOf="@id/speet_circle_iv"
+        app:layout_constraintBottom_toBottomOf="@id/speet_circle_iv"
+        app:layout_constraintLeft_toLeftOf="@id/speet_circle_iv"
+        app:layout_constraintRight_toRightOf="@id/speet_circle_iv"
+        app:layout_constraintVertical_bias="0.58"
+        />
+
+    <TextView
+        android:id="@+id/unit_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="km/h"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:includeFontPadding="false"
+        app:layout_constraintBottom_toBottomOf="@id/speed_tv"
+        app:layout_constraintLeft_toRightOf="@+id/speed_tv"
+        app:layout_constraintTop_toTopOf="@+id/speed_tv"
+        app:layout_constraintVertical_bias="0.2"/>
+
+</android.support.constraint.ConstraintLayout>

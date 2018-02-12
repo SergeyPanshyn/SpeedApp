@@ -4,6 +4,7 @@ import android.app.Service
 import android.content.Intent
 import android.os.IBinder
 import com.example.speedtest.data.repository.NotificationsManager
+import com.example.speedtest.data.repository.SpeedCheckManager
 import javax.inject.Inject
 
 /**
@@ -20,10 +21,15 @@ class SpeedService: Service() {
     @Inject
     lateinit var notificationsManager: NotificationsManager
 
+    @Inject
+    lateinit var speedCheckManager: SpeedCheckManager
+
     override fun onCreate() {
         super.onCreate()
         IS_RUNNING = true
         SpeedApp.appComponent?.inject(this)
+
+        speedCheckManager.runSpeedChecker()
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
