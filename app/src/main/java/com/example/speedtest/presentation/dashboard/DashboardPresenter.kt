@@ -1,5 +1,6 @@
 package com.example.speedtest.presentation.dashboard
 
+import com.example.speedtest.data.models.SpeedInfoModel
 import com.example.speedtest.presentation.Presenter
 
 /**
@@ -9,10 +10,15 @@ interface DashboardPresenter<T>: Presenter<T> {
 
     interface DashboardView {
 
-        fun showSpeed(speed: Int)
+        fun showSpeed(speedInfo: SpeedInfoModel)
+
+        fun showSpeedInfo(speedInfoModel: SpeedInfoModel)
 
     }
 
-    fun subscribeToCurrentSpeed()
+    fun subscribeToCurrentLocation()
 
+    fun getSpeedInfoModel()
+//
+//    fun setSpeedModelInfo(speedInfoModel: SpeedInfoModel)
 }

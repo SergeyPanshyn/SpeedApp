@@ -39,6 +39,14 @@ class SpeedService: Service() {
         return START_STICKY
     }
 
+    override fun onDestroy() {
+        stopForeground(true)
+        IS_RUNNING = false
+        speedCheckManager.clean()
+
+        super.onDestroy()
+    }
+
     override fun onBind(p0: Intent?): IBinder? {
         return null
     }

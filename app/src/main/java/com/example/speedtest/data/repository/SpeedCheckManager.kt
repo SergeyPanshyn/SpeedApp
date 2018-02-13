@@ -7,7 +7,9 @@ import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import com.example.speedtest.data.entity.CompositeProviderState
+import com.example.speedtest.data.models.SpeedInfoModel
 import com.example.speedtest.extention.convertMeterPerSecondToKmPerHour
 import rx.Observable
 import rx.android.schedulers.AndroidSchedulers
@@ -19,7 +21,8 @@ import java.util.concurrent.TimeUnit
  * Created by Sergey Panshyn on 12.02.2018.
  */
 class SpeedCheckManager(val context: Context,
-                        val locationManager: LocationManager) {
+                        val locationManager: LocationManager,
+                        val speedRepository: SpeedRepository) {
 
     companion object {
 
@@ -27,18 +30,34 @@ class SpeedCheckManager(val context: Context,
 
     private val checkIntervalSec = 30000L
 
-    private val speedSubject: PublishSubject<Int> = PublishSubject.create()
+    private val speedSubject: PublishSubject<SpeedInfoModel> = PublishSubject.create()
 
     private val locationListener = CustomLocationListener()
 
     private var reconnectSubscription = Subscriptions.empty()
 
-    fun listenForSpeed(): Observable<Int> {
+    fun listenForSpeed(): Observable<SpeedInfoModel> {
         return speedSubject
     }
 
     fun runSpeedChecker() {
-        subscribeToLocationChange()
+        getSpeedInfoModel()
+    }
+
+    fun clean() {
+        reconnectSubscription.unsubscribe()
+        locationManager.removeUpdates(locationListener)
+        speedSubject.onCompleted()
+    }
+
+    private fun getSpeedInfoModel() {
+        speedRepository.getSpeedInfo().subscribe(
+                {
+                    localSpeedInfo = it
+                    subscribeToLocationChange()
+                },
+                {Log.d("onxGetSpeedInfo", "Err: $it")}
+        )
     }
 
     @SuppressLint("MissingPermission")
@@ -63,20 +82,41 @@ class SpeedCheckManager(val context: Context,
                 )
     }
 
+    private var lastLocation: Location? = null
+    private var localSpeedInfo = SpeedInfoModel(0, 0, 0)
+
     private inner class CustomLocationListener : LocationListener {
         override fun onLocationChanged(location: Location?) {
             if (location != null) {
+                Toast.makeText(context, "Location changed", Toast.LENGTH_SHORT).show()
                 if (!location.hasSpeed()) {
                     return
                 }
-
-                speedSubject.onNext(location.speed.convertMeterPerSecondToKmPerHour())
+                val speedInfoModel = calculateDistanceAndSpeed(location)
+                localSpeedInfo = speedInfoModel
+                speedSubject.onNext(speedInfoModel)
+                speedRepository.setSpeedInfo(speedInfoModel)
             }
         }
 
         override fun onProviderDisabled(provider: String) {}
         override fun onProviderEnabled(provider: String) {}
         override fun onStatusChanged(provider: String, status: Int, extras: Bundle) {}
+    }
+
+    private fun calculateDistanceAndSpeed(location: Location): SpeedInfoModel {
+        val speedInfoModel = localSpeedInfo
+        if (lastLocation != null) {
+            val distance = location.distanceTo(lastLocation)
+            val speed = location.speed.convertMeterPerSecondToKmPerHour()
+            speedInfoModel.totalDistance = distance.toInt() + speedInfoModel.totalDistance
+            if (speed > speedInfoModel.maxSpeed) {
+                speedInfoModel.maxSpeed = speed
+            }
+            speedInfoModel.currentSpeed = speed
+        }
+        lastLocation = location
+        return speedInfoModel
     }
 
 }
