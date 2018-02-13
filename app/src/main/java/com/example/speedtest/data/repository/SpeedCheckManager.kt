@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import com.example.speedtest.data.entity.CompositeProviderState
+import com.example.speedtest.data.models.GraphPointModel
 import com.example.speedtest.data.models.SpeedInfoModel
 import com.example.speedtest.extention.convertMeterPerSecondToKmPerHour
 import rx.Observable
@@ -22,7 +23,8 @@ import java.util.concurrent.TimeUnit
  */
 class SpeedCheckManager(val context: Context,
                         val locationManager: LocationManager,
-                        val speedRepository: SpeedRepository) {
+                        val speedRepository: SpeedRepository,
+                        val graphRepository: GraphRepository) {
 
     companion object {
 
@@ -89,13 +91,12 @@ class SpeedCheckManager(val context: Context,
         override fun onLocationChanged(location: Location?) {
             if (location != null) {
                 Toast.makeText(context, "Location changed", Toast.LENGTH_SHORT).show()
-                if (!location.hasSpeed()) {
-                    return
-                }
+
                 val speedInfoModel = calculateDistanceAndSpeed(location)
                 localSpeedInfo = speedInfoModel
                 speedSubject.onNext(speedInfoModel)
                 speedRepository.setSpeedInfo(speedInfoModel)
+                graphRepository.saveGraphPoint(GraphPointModel(System.currentTimeMillis(), speedInfoModel.currentSpeed))
             }
         }
 

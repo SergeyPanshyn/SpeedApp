@@ -13,8 +13,8 @@ class RepositoriesModule {
 
     @Provides
     @Singleton
-    fun provideSpeedCheckManager(context: Context, locationManager: LocationManager, speedRepository: SpeedRepository) =
-            SpeedCheckManager(context, locationManager, speedRepository)
+    fun provideSpeedCheckManager(context: Context, locationManager: LocationManager, speedRepository: SpeedRepository, graphRepository: GraphRepository) =
+            SpeedCheckManager(context, locationManager, speedRepository, graphRepository)
 
     @Provides
     @Singleton
@@ -23,4 +23,8 @@ class RepositoriesModule {
     @Provides
     @Singleton
     fun provideSpeedRepository(): SpeedRepository = SpeedRepositoryImpl()
+
+    @Provides
+    @Singleton
+    fun provideGraphRepository(): GraphRepository = GraphRepositoryImpl()
 }
