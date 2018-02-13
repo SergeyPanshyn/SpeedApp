@@ -4,4 +4,12 @@
     <string name="speed_app_is_running">Checking your speed.</string>
 
     <string name="speed_title">Your speed is</string>
+
+
+    //Fonts
+    <string translatable="false" name="fontLight">fonts/light.ttf</string>
+    <string translatable="false" name="fontMedium">fonts/medium.ttf</string>
+    <string translatable="false" name="fontRegular">fonts/regular.ttf</string>
+    <string translatable="false" name="fontSemibold">fonts/semibold.otf</string>
+    <string translatable="false" name="fontBold">fonts/bold.otf</string>
 </resources>
