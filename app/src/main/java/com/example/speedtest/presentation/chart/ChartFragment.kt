@@ -45,6 +45,7 @@ class ChartFragment: Fragment(), ChartPresenter.ChartView, OnChartValueSelectedL
         ButterKnife.bind(this, fragment)
 
         daggerInit()
+        testInitGraph()
 
         return fragment
     }
@@ -53,7 +54,7 @@ class ChartFragment: Fragment(), ChartPresenter.ChartView, OnChartValueSelectedL
         (activity as MainActivity).chartComponent?.inject(this)
         chartPresenter.setView(this)
         chartPresenter.getGraphPoints()
-//        testInitGraph()
+
     }
 
     override fun showGraphPoints(listValues: List<ChartPoint>) {
@@ -79,26 +80,37 @@ class ChartFragment: Fragment(), ChartPresenter.ChartView, OnChartValueSelectedL
 
             chartLc.data = data
             chartLc.data.isHighlightEnabled = true
+            chartLc.setVisibleXRangeMaximum(50f)
             chartLc.moveViewToX(data.entryCount.toFloat())
 
         }
 
         chartPb.visibility = View.GONE
+        if (chartLc.data.entryCount > 0) {
+            createMarker()
+        }
 
+    }
+
+    private fun createMarker() {
+        chartLc.setDrawMarkers(true)
+        val mv = MyMarkerView(context!!, R.layout.custom_marker_view)
+        mv.chartView = chartLc
+        chartLc.marker = mv
     }
 
     private fun createSet(values: ArrayList<Entry>?): LineDataSet {
         val set = LineDataSet(values, "")
         set.axisDependency = YAxis.AxisDependency.LEFT
         set.color = resources.getColor(R.color.red)
-        set.lineWidth = 3f
+        set.lineWidth = 1f
         set.fillAlpha = 65
         set.fillColor = resources.getColor(R.color.red)
         set.highLightColor = Color.rgb(244, 117, 117)
         set.setDrawValues(false)
         set.setDrawCircles(false)
         set.setDrawHighlightIndicators(true)
-        set.mode = LineDataSet.Mode.LINEAR
+        set.mode = LineDataSet.Mode.CUBIC_BEZIER
         return set
     }
 
@@ -110,12 +122,12 @@ class ChartFragment: Fragment(), ChartPresenter.ChartView, OnChartValueSelectedL
 
         chartLc.setTouchEnabled(true)
 
-        chartLc.setDragDecelerationFrictionCoef(0.9f)
+        chartLc.dragDecelerationFrictionCoef = 0.9f
 
-        chartLc.setDragEnabled(true)
+        chartLc.isDragEnabled = true
         chartLc.setScaleEnabled(true)
         chartLc.setDrawGridBackground(false)
-        chartLc.setHighlightPerDragEnabled(true)
+        chartLc.isHighlightPerDragEnabled = true
 
         chartLc.setPinchZoom(true)
 
@@ -138,10 +150,9 @@ class ChartFragment: Fragment(), ChartPresenter.ChartView, OnChartValueSelectedL
         xAxis.position = XAxis.XAxisPosition.BOTTOM
         xAxis.textColor
         xAxis.textSize = 10f
-        xAxis.textColor = Color.BLACK
+        xAxis.textColor = Color.GRAY
         xAxis.setDrawAxisLine(false)
         xAxis.setDrawGridLines(false)
-        xAxis.textColor = Color.BLACK
         xAxis.setCenterAxisLabels(true)
         xAxis.granularity = 5f
         xAxis.valueFormatter = xAxisFormatter
@@ -149,16 +160,17 @@ class ChartFragment: Fragment(), ChartPresenter.ChartView, OnChartValueSelectedL
         val leftAxis = chartLc.axisLeft
         leftAxis.setDrawAxisLine(false)
         leftAxis.setDrawGridLines(false)
-        leftAxis.setDrawLabels(false)
+        leftAxis.setDrawLabels(true)
+        leftAxis.textColor = Color.WHITE
         leftAxis.axisMinimum = 0f
 
 
         val rightAxis = chartLc.axisRight
-        rightAxis.setEnabled(false)
+        rightAxis.isEnabled = false
     }
 
     override fun onNothingSelected() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
     override fun onValueSelected(e: Entry?, h: Highlight?) {

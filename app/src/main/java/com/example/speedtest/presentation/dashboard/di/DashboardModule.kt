@@ -1,7 +1,9 @@
 package com.example.speedtest.presentation.dashboard.di
 
+import com.example.speedtest.data.repository.ChartRepository
 import com.example.speedtest.data.repository.SpeedCheckManager
 import com.example.speedtest.data.repository.SpeedRepository
+import com.example.speedtest.domain.chart.DeleteAllChartPointsUseCase
 import com.example.speedtest.domain.schedulers.ObserveOn
 import com.example.speedtest.domain.schedulers.SubscribeOn
 import com.example.speedtest.domain.speed.GetCurrentSpeedUseCase
@@ -23,8 +25,9 @@ class DashboardModule {
     @PerActivity
     fun provideDashboardPresenter(getCurrentSpeedUseCase: GetCurrentSpeedUseCase,
                                   getSpeedInfoUseCase: GetSpeedInfoUseCase,
-                                  setSpeedInfoUseCase: SetSpeedInfoUseCase): DashboardPresenter<DashboardPresenter.DashboardView>
-            = DashboardPresenterImpl(getCurrentSpeedUseCase, getSpeedInfoUseCase, setSpeedInfoUseCase)
+                                  setSpeedInfoUseCase: SetSpeedInfoUseCase,
+                                  deleteAllChartPointsUseCase: DeleteAllChartPointsUseCase): DashboardPresenter<DashboardPresenter.DashboardView>
+            = DashboardPresenterImpl(getCurrentSpeedUseCase, getSpeedInfoUseCase, setSpeedInfoUseCase, deleteAllChartPointsUseCase)
 
     @Provides
     @PerActivity
@@ -41,4 +44,8 @@ class DashboardModule {
     fun provideSetSpeedInfoUseCase(observeOn: ObserveOn, subscribeOn: SubscribeOn, speedRepository: SpeedRepository)
             = SetSpeedInfoUseCase(observeOn, subscribeOn, speedRepository)
 
+    @Provides
+    @PerActivity
+    fun provideDeleteAllChartPointsUseCase(observeOn: ObserveOn, subscribeOn: SubscribeOn, chartRepository: ChartRepository)
+            = DeleteAllChartPointsUseCase(observeOn, subscribeOn, chartRepository)
 }

@@ -19,6 +19,6 @@ interface DashboardPresenter<T>: Presenter<T> {
     fun subscribeToCurrentLocation()
 
     fun getSpeedInfoModel()
-//
-//    fun setSpeedModelInfo(speedInfoModel: SpeedInfoModel)
+
+    fun deleteAllChartPoints()
 }

@@ -1,6 +1,7 @@
 package com.example.speedtest.data.repository
 
 import com.example.speedtest.data.db.entity.ChartPoint
+import io.reactivex.Completable
 import io.reactivex.Single
 
 /**
@@ -11,5 +12,7 @@ interface ChartRepository {
     fun saveGraphPoint(chartPoint: ChartPoint)
 
     fun getAllChartPoints(): Single<List<ChartPoint>>
+
+    fun deleteAllChartPoints(): Completable
 
 }

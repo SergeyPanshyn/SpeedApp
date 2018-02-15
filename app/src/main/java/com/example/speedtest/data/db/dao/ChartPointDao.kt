@@ -21,4 +21,7 @@ interface ChartPointDao {
 
     @Delete
     fun deleteChartPoint(chartPoint: ChartPoint)
+
+    @Query("DELETE FROM chartpoint")
+    fun deleteTable()
 }

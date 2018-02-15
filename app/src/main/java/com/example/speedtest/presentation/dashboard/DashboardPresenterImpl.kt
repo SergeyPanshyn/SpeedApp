@@ -2,6 +2,7 @@ package com.example.speedtest.presentation.dashboard
 
 import android.util.Log
 import com.example.speedtest.data.db.entity.SpeedInfo
+import com.example.speedtest.domain.chart.DeleteAllChartPointsUseCase
 import com.example.speedtest.domain.speed.GetCurrentSpeedUseCase
 import com.example.speedtest.domain.speed.GetSpeedInfoUseCase
 import com.example.speedtest.domain.speed.SetSpeedInfoUseCase
@@ -12,7 +13,8 @@ import io.reactivex.observers.ResourceObserver
  */
 class DashboardPresenterImpl<T: DashboardPresenter.DashboardView>(private val getCurrentSpeedUseCase: GetCurrentSpeedUseCase,
                                                                   private val getSpeedInfoModelUseCase: GetSpeedInfoUseCase,
-                                                                  private val setSpeedInfoUseCase: SetSpeedInfoUseCase): DashboardPresenter<T> {
+                                                                  private val setSpeedInfoUseCase: SetSpeedInfoUseCase,
+                                                                  private val deleteAllChartPointsUseCase: DeleteAllChartPointsUseCase): DashboardPresenter<T> {
 
     private var view: T? = null
 
@@ -47,11 +49,10 @@ class DashboardPresenterImpl<T: DashboardPresenter.DashboardView>(private val ge
         )
     }
 
-//    override fun setSpeedModelInfo(speedInfoModel: SpeedInfoModel) {
-//        setSpeedInfoUseCase.speedInfoModel = speedInfoModel
-//        setSpeedInfoUseCase.executeCompletable(
-//                {Log.d("onxSetSpeedInfoModel", "Completed.")},
-//                {Log.d("onxSetSpeedInfoModel", "Err:$it")}
-//        )
-//    }
+    override fun deleteAllChartPoints() {
+        deleteAllChartPointsUseCase.executeCompletable(
+                {},
+                {}
+        )
+    }
 }

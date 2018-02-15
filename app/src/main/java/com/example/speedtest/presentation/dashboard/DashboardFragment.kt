@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import butterknife.BindView
@@ -54,6 +55,9 @@ class DashboardFragment: Fragment(), DashboardPresenter.DashboardView {
     @BindView(R.id.total_distance_unit_tv)
     lateinit var totalDistanceUnitTv: TextView
 
+    @BindView(R.id.button)
+    lateinit var button: Button
+
     @Inject
     lateinit var dashboardPresenter: DashboardPresenter<DashboardPresenter.DashboardView>
 
@@ -74,6 +78,8 @@ class DashboardFragment: Fragment(), DashboardPresenter.DashboardView {
 
         setTypefaces()
 
+        button.setOnClickListener { dashboardPresenter.deleteAllChartPoints() }
+
         return fragment
     }
 
@@ -82,6 +88,13 @@ class DashboardFragment: Fragment(), DashboardPresenter.DashboardView {
         dashboardPresenter.setView(this)
         dashboardPresenter.subscribeToCurrentLocation()
         dashboardPresenter.getSpeedInfoModel()
+        setLoadingState()
+    }
+
+    private fun setLoadingState() {
+        speedTv.text = "0"
+        maxSpeedTv.text = "-/- "
+        totalDistanceTv.text = "-/- "
     }
 
     override fun showSpeed(speedInfo: SpeedInfo) {

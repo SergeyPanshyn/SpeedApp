@@ -10,24 +10,11 @@ import io.reactivex.Single
  */
 class SpeedRepositoryImpl(private val database: SpeedDatabase): SpeedRepository {
     override fun setSpeedInfo(speedInfo: SpeedInfo): Completable {
-//        val realm = Realm.getDefaultInstance()
-//
-//        realm.use {
-//            it.executeTransaction {
-//                it.copyToRealmOrUpdate(speedInfoModel)
-//            }
-//        }
         database.getSpeedInfoDao().insertSpeedInfo(speedInfo)
         return Completable.complete()
     }
 
     override fun getSpeedInfo(): Single<SpeedInfo> {
-//        val realm = Realm.getDefaultInstance()
-//        val speedInfoModel = realm.where(SpeedInfoModel::class.java).findFirst() ?: return Single.just(SpeedInfoModel(0, 0, 0))
-//
-//        realm.use {
-//            return Single.just(speedInfoModel)
-//        }
         return database.getSpeedInfoDao().getSpeedInfo()
     }
 
