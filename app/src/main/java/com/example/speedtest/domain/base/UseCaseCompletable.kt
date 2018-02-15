@@ -2,7 +2,7 @@ package com.example.speedtest.domain.base
 
 import com.example.speedtest.domain.schedulers.ObserveOn
 import com.example.speedtest.domain.schedulers.SubscribeOn
-import rx.Completable
+import io.reactivex.Completable
 
 abstract class UseCaseCompletable(subscribeOn: SubscribeOn, observeOn: ObserveOn) : UseCase(subscribeOn, observeOn) {
 
@@ -14,11 +14,10 @@ abstract class UseCaseCompletable(subscribeOn: SubscribeOn, observeOn: ObserveOn
                     .subscribeOn(subscribeOn.scheduler)
                     .observeOn(observeOn.scheduler)
                     .doOnError { completable = null }
-                    .doOnCompleted { completable = null }
+                    .doOnComplete { completable = null }
         }
-        subscription = completable?.subscribe({ onComplete() }, { onError(it) })
+        disposables.add(completable!!.subscribe({ onComplete() },{ onError(it) }))
     }
-
 
     protected abstract val useCaseCompletable: Completable
 }

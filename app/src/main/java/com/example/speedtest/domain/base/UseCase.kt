@@ -2,14 +2,15 @@ package com.example.speedtest.domain.base
 
 import com.example.speedtest.domain.schedulers.ObserveOn
 import com.example.speedtest.domain.schedulers.SubscribeOn
-import rx.subscriptions.Subscriptions
+import io.reactivex.disposables.CompositeDisposable
 
 open class UseCase(protected var subscribeOn: SubscribeOn, protected var observeOn: ObserveOn) {
-    protected var subscription = Subscriptions.empty()
+
+    protected var disposables = CompositeDisposable()
 
     fun unsubscribe() {
-        if (!subscription.isUnsubscribed) {
-            subscription.unsubscribe()
+        if (!disposables.isDisposed) {
+            disposables.dispose()
         }
     }
 }

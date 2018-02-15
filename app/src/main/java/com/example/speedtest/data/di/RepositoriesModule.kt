@@ -3,6 +3,7 @@ package com.example.speedtest.data.di
 
 import android.content.Context
 import android.location.LocationManager
+import com.example.speedtest.data.db.SpeedDatabase
 import com.example.speedtest.data.repository.*
 import dagger.Module
 import dagger.Provides
@@ -13,7 +14,7 @@ class RepositoriesModule {
 
     @Provides
     @Singleton
-    fun provideSpeedCheckManager(context: Context, locationManager: LocationManager, speedRepository: SpeedRepository, graphRepository: GraphRepository) =
+    fun provideSpeedCheckManager(context: Context, locationManager: LocationManager, speedRepository: SpeedRepository, graphRepository: ChartRepository) =
             SpeedCheckManager(context, locationManager, speedRepository, graphRepository)
 
     @Provides
@@ -22,9 +23,9 @@ class RepositoriesModule {
 
     @Provides
     @Singleton
-    fun provideSpeedRepository(): SpeedRepository = SpeedRepositoryImpl()
+    fun provideSpeedRepository(speedDatabase: SpeedDatabase): SpeedRepository = SpeedRepositoryImpl(speedDatabase)
 
     @Provides
     @Singleton
-    fun provideGraphRepository(): GraphRepository = GraphRepositoryImpl()
+    fun provideChartRepository(speedDatabase: SpeedDatabase): ChartRepository = ChartRepositoryImpl(speedDatabase)
 }

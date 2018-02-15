@@ -1,6 +1,6 @@
 package com.example.speedtest.presentation.chart.di
 
-import com.example.speedtest.data.repository.GraphRepository
+import com.example.speedtest.data.repository.ChartRepository
 import com.example.speedtest.domain.chart.GetChartPointsUseCase
 import com.example.speedtest.domain.schedulers.ObserveOn
 import com.example.speedtest.domain.schedulers.SubscribeOn
@@ -22,6 +22,6 @@ class ChartModule {
 
     @Provides
     @PerActivity
-    fun provideGetChartPointsUseCase(observeOn: ObserveOn, subscribeOn: SubscribeOn, graphRepository: GraphRepository)
+    fun provideGetChartPointsUseCase(observeOn: ObserveOn, subscribeOn: SubscribeOn, graphRepository: ChartRepository)
             = GetChartPointsUseCase(observeOn, subscribeOn, graphRepository)
 }

@@ -1,11 +1,11 @@
 package com.example.speedtest.domain.speed
 
-import com.example.speedtest.data.models.SpeedInfoModel
+import com.example.speedtest.data.db.entity.SpeedInfo
 import com.example.speedtest.data.repository.SpeedRepository
 import com.example.speedtest.domain.base.UseCaseCompletable
 import com.example.speedtest.domain.schedulers.ObserveOn
 import com.example.speedtest.domain.schedulers.SubscribeOn
-import rx.Completable
+import io.reactivex.Completable
 
 /**
  * Created by Sergey Panshyn on 13.02.2018.
@@ -14,6 +14,6 @@ class SetSpeedInfoUseCase(observeOn: ObserveOn, subscribeOn: SubscribeOn, val sp
     override val useCaseCompletable: Completable
         get() = speedRepository.setSpeedInfo(speedInfoModel!!)
 
-    var speedInfoModel: SpeedInfoModel? = null
+    var speedInfoModel: SpeedInfo? = null
 
 }

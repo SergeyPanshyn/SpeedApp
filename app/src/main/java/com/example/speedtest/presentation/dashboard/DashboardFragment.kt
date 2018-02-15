@@ -10,7 +10,7 @@ import android.widget.TextView
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.example.speedtest.R
-import com.example.speedtest.data.models.SpeedInfoModel
+import com.example.speedtest.data.db.entity.SpeedInfo
 import com.example.speedtest.extention.setBoldFont
 import com.example.speedtest.extention.setLightFont
 import com.example.speedtest.extention.setRegularFont
@@ -84,7 +84,7 @@ class DashboardFragment: Fragment(), DashboardPresenter.DashboardView {
         dashboardPresenter.getSpeedInfoModel()
     }
 
-    override fun showSpeed(speedInfo: SpeedInfoModel) {
+    override fun showSpeed(speedInfo: SpeedInfo) {
         speedTv.text = speedInfo.currentSpeed.toString()
         maxSpeedTv.text = speedInfo.maxSpeed.toString()
         setTotalDistance(speedInfo.totalDistance)
@@ -100,7 +100,7 @@ class DashboardFragment: Fragment(), DashboardPresenter.DashboardView {
         }
     }
 
-    override fun showSpeedInfo(speedInfoModel: SpeedInfoModel) {
+    override fun showSpeedInfo(speedInfoModel: SpeedInfo) {
         maxSpeedTv.text = speedInfoModel.maxSpeed.toString()
         setTotalDistance(speedInfoModel.totalDistance)
     }

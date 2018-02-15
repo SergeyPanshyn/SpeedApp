@@ -1,6 +1,6 @@
 package com.example.speedtest.domain.schedulers
 
-import rx.Scheduler
+import io.reactivex.Scheduler
 
 interface ObserveOn {
 

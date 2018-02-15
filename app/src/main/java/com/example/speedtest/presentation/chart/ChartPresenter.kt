@@ -1,6 +1,6 @@
 package com.example.speedtest.presentation.chart
 
-import com.example.speedtest.data.models.GraphPointModel
+import com.example.speedtest.data.db.entity.ChartPoint
 import com.example.speedtest.presentation.Presenter
 
 /**
@@ -10,7 +10,7 @@ interface ChartPresenter<T>: Presenter<T> {
 
     interface ChartView {
 
-        fun showGraphPoints(listValues: List<GraphPointModel>)
+        fun showGraphPoints(listValues: List<ChartPoint>)
 
     }
 

@@ -10,7 +10,7 @@ import android.widget.ProgressBar
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.example.speedtest.R
-import com.example.speedtest.data.models.GraphPointModel
+import com.example.speedtest.data.db.entity.ChartPoint
 import com.example.speedtest.presentation.MainActivity
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.Legend
@@ -53,13 +53,14 @@ class ChartFragment: Fragment(), ChartPresenter.ChartView, OnChartValueSelectedL
         (activity as MainActivity).chartComponent?.inject(this)
         chartPresenter.setView(this)
         chartPresenter.getGraphPoints()
+//        testInitGraph()
     }
 
-    override fun showGraphPoints(listValues: List<GraphPointModel>) {
+    override fun showGraphPoints(listValues: List<ChartPoint>) {
         setData(listValues)
     }
 
-    private fun setData(listValues: List<GraphPointModel>) {
+    private fun setData(listValues: List<ChartPoint>) {
 
         if (!listValues.isEmpty()) {
 
@@ -130,6 +131,8 @@ class ChartFragment: Fragment(), ChartPresenter.ChartView, OnChartValueSelectedL
         l.form = Legend.LegendForm.NONE
         l.textColor = Color.WHITE
 
+        val xAxisFormatter = AxisValueFormatter(chartLc)
+
         val xAxis = chartLc.xAxis
         xAxis.enableGridDashedLine(10f, 10f, 0f)
         xAxis.position = XAxis.XAxisPosition.BOTTOM
@@ -141,6 +144,7 @@ class ChartFragment: Fragment(), ChartPresenter.ChartView, OnChartValueSelectedL
         xAxis.textColor = Color.BLACK
         xAxis.setCenterAxisLabels(true)
         xAxis.granularity = 5f
+        xAxis.valueFormatter = xAxisFormatter
 
         val leftAxis = chartLc.axisLeft
         leftAxis.setDrawAxisLine(false)
@@ -158,6 +162,5 @@ class ChartFragment: Fragment(), ChartPresenter.ChartView, OnChartValueSelectedL
     }
 
     override fun onValueSelected(e: Entry?, h: Highlight?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

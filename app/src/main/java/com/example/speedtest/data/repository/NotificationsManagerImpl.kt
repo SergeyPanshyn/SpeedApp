@@ -12,6 +12,11 @@ import com.example.speedtest.presentation.MainActivity
  * Created by Sergey Panshyn on 12.02.2018.
  */
 class NotificationsManagerImpl : NotificationsManager {
+
+    companion object {
+        const val NOTIFICATION_CHANEL_ID = "NotificationChanelId"
+    }
+
     override fun buildForegroundNotification(context: Context): Notification {
         val builder = getNotificationBuilder(context, context.getString(R.string.speed_app_is_running))
         val resultIntent = Intent(context, MainActivity::class.java)
@@ -31,7 +36,7 @@ class NotificationsManagerImpl : NotificationsManager {
     }
 
     private fun getNotificationBuilder(context: Context, msg: String): NotificationCompat.Builder {
-        return NotificationCompat.Builder(context)
+        return NotificationCompat.Builder(context, NOTIFICATION_CHANEL_ID)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle(context.getString(R.string.speed_app_is_running))
                 .setAutoCancel(true)

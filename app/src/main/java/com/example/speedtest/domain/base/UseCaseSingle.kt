@@ -2,7 +2,7 @@ package com.example.speedtest.domain.base
 
 import com.example.speedtest.domain.schedulers.ObserveOn
 import com.example.speedtest.domain.schedulers.SubscribeOn
-import rx.Single
+import io.reactivex.Single
 
 abstract class UseCaseSingle<T>(subscribeOn: SubscribeOn, observeOn: ObserveOn) : UseCase(subscribeOn, observeOn) {
 
@@ -16,7 +16,7 @@ abstract class UseCaseSingle<T>(subscribeOn: SubscribeOn, observeOn: ObserveOn) 
                     .doOnSuccess { single = null }
                     .doOnError { single = null }
         }
-        subscription = single?.subscribe({ onSuccess(it) }, { onError(it) })
+        disposables.add(single!!.subscribe({onSuccess(it)}, {onError(it)}))
     }
 
     protected abstract val useCaseSingle: Single<T>

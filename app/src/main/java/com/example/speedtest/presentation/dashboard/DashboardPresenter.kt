@@ -1,6 +1,6 @@
 package com.example.speedtest.presentation.dashboard
 
-import com.example.speedtest.data.models.SpeedInfoModel
+import com.example.speedtest.data.db.entity.SpeedInfo
 import com.example.speedtest.presentation.Presenter
 
 /**
@@ -10,9 +10,9 @@ interface DashboardPresenter<T>: Presenter<T> {
 
     interface DashboardView {
 
-        fun showSpeed(speedInfo: SpeedInfoModel)
+        fun showSpeed(speedInfo: SpeedInfo)
 
-        fun showSpeedInfo(speedInfoModel: SpeedInfoModel)
+        fun showSpeedInfo(speedInfoModel: SpeedInfo)
 
     }
 

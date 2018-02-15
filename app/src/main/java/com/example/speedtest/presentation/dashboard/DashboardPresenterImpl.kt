@@ -1,11 +1,11 @@
 package com.example.speedtest.presentation.dashboard
 
 import android.util.Log
-import com.example.speedtest.data.models.SpeedInfoModel
-import com.example.speedtest.domain.base.DefaultSubscriber
+import com.example.speedtest.data.db.entity.SpeedInfo
 import com.example.speedtest.domain.speed.GetCurrentSpeedUseCase
 import com.example.speedtest.domain.speed.GetSpeedInfoUseCase
 import com.example.speedtest.domain.speed.SetSpeedInfoUseCase
+import io.reactivex.observers.ResourceObserver
 
 /**
  * Created by Sergey Panshyn on 12.02.2018.
@@ -25,16 +25,16 @@ class DashboardPresenterImpl<T: DashboardPresenter.DashboardView>(private val ge
     }
 
     override fun subscribeToCurrentLocation() {
-        getCurrentSpeedUseCase.executeObservable(object : DefaultSubscriber<SpeedInfoModel>(){
-            override fun onCompleted() {
-                Log.d("onxGetSpeed", "Completed.")
+        getCurrentSpeedUseCase.executeObservable(object : ResourceObserver<SpeedInfo>(){
+            override fun onComplete() {
+                Log.d("onxGetSpeed", "Completed")
             }
 
             override fun onError(e: Throwable) {
                 Log.d("onxGetSpeed", "Err: $e")
             }
 
-            override fun onNext(value: SpeedInfoModel) {
+            override fun onNext(value: SpeedInfo) {
                 view?.showSpeed(value)
             }
         })
