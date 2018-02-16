@@ -2,21 +2,21 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_map"
+        android:id="@+id/action_history"
         android:enabled="true"
-        android:icon="@drawable/map"
-        android:title="Map"
+        android:icon="@drawable/history"
+        android:title="History"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/action_home"
+        android:id="@+id/action_live"
         android:enabled="true"
-        android:icon="@drawable/home"
-        android:title="Home"
+        android:icon="@drawable/speedometer"
+        android:title="Live"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/action_chart"
+        android:id="@+id/action_settings"
         android:enabled="true"
-        android:icon="@drawable/chart"
-        android:title="Chart"
+        android:icon="@drawable/settings"
+        android:title="Settings"
         app:showAsAction="ifRoom" />
 </menu>

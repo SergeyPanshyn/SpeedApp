@@ -10,7 +10,6 @@ import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
-import android.widget.ImageView
 import android.widget.Toast
 import butterknife.BindView
 import butterknife.ButterKnife
@@ -21,12 +20,10 @@ import com.example.speedtest.presentation.chart.ChartFragment
 import com.example.speedtest.presentation.chart.di.ChartModule
 import com.example.speedtest.presentation.dashboard.DashboardFragment
 import com.example.speedtest.presentation.dashboard.di.DashboardModule
+import com.example.speedtest.presentation.settings.SettingsFragment
 import com.example.speedtest.presentation.settings.di.SettingsModule
 
-class MainActivity : AppCompatActivity() {
-
-    @BindView(R.id.settings_button)
-    lateinit var settingsButton: ImageView
+class MainActivity : AppCompatActivity(), SettingsFragment.SettingsListener {
 
     @BindView(R.id.bottom_navigation_view)
     lateinit var bottomNavigationView: BottomNavigationView
@@ -60,15 +57,16 @@ class MainActivity : AppCompatActivity() {
     private fun setupBottomNavigationListener() {
         bottomNavigationView.setOnNavigationItemSelectedListener { item: MenuItem ->
             when(item.itemId) {
-                R.id.action_map -> {
+                R.id.action_history -> {
+                    replaceFragment(ChartFragment(), CHART_FRAGMENT_TAG)
                     true
                 }
-                R.id.action_home -> {
+                R.id.action_live -> {
                     replaceFragment(DashboardFragment(), DASHBOARD_FRAGMENT_TAG)
                     true
                 }
-                R.id.action_chart -> {
-                    replaceFragment(ChartFragment(), CHART_FRAGMENT_TAG)
+                R.id.action_settings -> {
+                    replaceFragment(SettingsFragment(), SETTINGS_FRAGMENT_TAG)
                     true
                 }
                 else -> {
@@ -81,6 +79,10 @@ class MainActivity : AppCompatActivity() {
     private fun setupFragment() {
         bottomNavigationView.menu.getItem(1).isChecked = true
         replaceFragment(DashboardFragment(), DASHBOARD_FRAGMENT_TAG)
+    }
+
+    override fun onProviderChanged() {
+
     }
 
     private fun replaceFragment(fragment: Fragment, tag: String, addToBackStack: Boolean = false) {

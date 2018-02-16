@@ -161,7 +161,7 @@ class ChartFragment: Fragment(), ChartPresenter.ChartView, OnChartValueSelectedL
         leftAxis.setDrawAxisLine(false)
         leftAxis.setDrawGridLines(false)
         leftAxis.setDrawLabels(true)
-        leftAxis.textColor = Color.WHITE
+        leftAxis.textColor = Color.GRAY
         leftAxis.axisMinimum = 0f
 
 

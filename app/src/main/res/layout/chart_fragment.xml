@@ -13,7 +13,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="1.2"
             android:background="#e6000000"/>
 
         <View
@@ -25,12 +25,9 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="1.1"
             android:background="#282828"/>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="39dp"
-            android:background="@color/white"/>
+
 
     </LinearLayout>
 

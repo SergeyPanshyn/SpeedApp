@@ -7,16 +7,15 @@ import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
+import com.example.speedtest.R
 import com.example.speedtest.data.db.entity.ChartPoint
 import com.example.speedtest.data.db.entity.SpeedInfo
-import com.example.speedtest.data.entity.CompositeProviderState
 import com.example.speedtest.extention.convertMeterPerSecondToKmPerHour
+import com.example.speedtest.extention.getProvider
+import io.reactivex.Completable
 import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposables
 import io.reactivex.subjects.PublishSubject
-import java.util.concurrent.TimeUnit
 
 /**
  * Created by Sergey Panshyn on 12.02.2018.
@@ -43,11 +42,10 @@ class SpeedCheckManager(val context: Context,
     private var reconnectSubscription = Disposables.empty()
 
     fun listenForSpeed(): Observable<SpeedInfo> {
-        return speedSubject.doOnSubscribe { Log.d("testChecker", "Subscibed") }
+        return speedSubject
     }
 
     fun runSpeedChecker() {
-        Log.d("testChecker", "runSpeedChecker")
         getSpeedInfoModel()
     }
 
@@ -58,13 +56,11 @@ class SpeedCheckManager(val context: Context,
     }
 
     private fun getSpeedInfoModel() {
-        Log.d("testChecker", "getSpeedInfoModel")
         subscribeToLocationChange()
         speedRepository.getSpeedInfo().subscribe(
                 {
                     localSpeedInfo = it
                     subscribeToLocationChange()
-                    Log.d("testChecker", "getSpeedInfo")
                 },
                 {Log.d("onxGetSpeedInfo", "Err: $it")}
         )
@@ -72,36 +68,21 @@ class SpeedCheckManager(val context: Context,
 
     @SuppressLint("MissingPermission")
     private fun subscribeToLocationChange() {
-        reconnectSubscription = Observable.interval(checkIntervalSec, TimeUnit.MILLISECONDS)
-                .map { CompositeProviderState(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER), locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) }
-                .observeOn(AndroidSchedulers.mainThread())
-                .retry()
-                .subscribe({(gpsState, networkState) ->
-                    Log.d("testChecker", "1")
-                    locationManager.removeUpdates(locationListener)
-                    if (gpsState) {
-                        Log.d("testChecker", "2")
-                        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, locationListener)
-                        return@subscribe
-                    }
-                    if (networkState) {
-                        Log.d("testChecker", "3")
-                        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0f, locationListener)
-                    }
-                    Log.d("testChecker", "4")
-                },
-                        {
-                             Log.i("onxLocationChangeErr", it.toString())
-                        }
-                )
+        locationManager.removeUpdates(locationListener)
+        when (context.getProvider()) {
+            context.getString(R.string.provider_gps) -> { locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, locationListener) }
+            context.getString(R.string.provider_network) -> { locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0f, locationListener) }
+        }
+    }
+
+    fun changeProvider(): Completable {
+        subscribeToLocationChange()
+        return Completable.complete()
     }
 
     private inner class CustomLocationListener : LocationListener {
         override fun onLocationChanged(location: Location?) {
-            Log.d("testChecker", "op")
             if (location != null) {
-                Toast.makeText(context, "Location changed", Toast.LENGTH_SHORT).show()
-
                 val speedInfoModel = calculateDistanceAndSpeed(location)
                 localSpeedInfo = speedInfoModel
                 speedSubject.onNext(speedInfoModel)

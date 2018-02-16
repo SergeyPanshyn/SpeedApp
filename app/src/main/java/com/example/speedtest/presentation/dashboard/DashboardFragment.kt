@@ -5,7 +5,6 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import butterknife.BindView
@@ -55,17 +54,12 @@ class DashboardFragment: Fragment(), DashboardPresenter.DashboardView {
     @BindView(R.id.total_distance_unit_tv)
     lateinit var totalDistanceUnitTv: TextView
 
-    @BindView(R.id.button)
-    lateinit var button: Button
-
     @Inject
     lateinit var dashboardPresenter: DashboardPresenter<DashboardPresenter.DashboardView>
 
     private val dashboardListener: DashboardFragment.DashboardListener by lazy { context as DashboardFragment.DashboardListener }
 
     interface DashboardListener {
-
-        fun onSettingsButtonClick()
 
     }
 
@@ -77,8 +71,6 @@ class DashboardFragment: Fragment(), DashboardPresenter.DashboardView {
         daggerInit()
 
         setTypefaces()
-
-        button.setOnClickListener { dashboardPresenter.deleteAllChartPoints() }
 
         return fragment
     }

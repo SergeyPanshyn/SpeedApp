@@ -19,6 +19,6 @@ interface SpeedInfoDao {
     @Update(onConflict = OnConflictStrategy.REPLACE)
     fun updateSpeedInfo(speedInfo: SpeedInfo)
 
-    @Delete
-    fun deleteSpeedInfo(speedInfo: SpeedInfo)
+    @Query("DELETE FROM speedinfo")
+    fun clearSpeedInfo()
 }

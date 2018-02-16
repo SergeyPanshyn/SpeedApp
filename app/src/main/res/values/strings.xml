@@ -12,4 +12,12 @@
     <string translatable="false" name="fontRegular">fonts/regular.ttf</string>
     <string translatable="false" name="fontSemibold">fonts/semibold.otf</string>
     <string translatable="false" name="fontBold">fonts/bold.otf</string>
+
+    //Prefs
+    <string translatable="false" name="distance_unit">distance_unit</string>
+    <string translatable="false" name="provider">provider</string>
+    <string translatable="false" name="distance_unit_km">km</string>
+    <string translatable="false" name="distance_unit_miles">miles</string>
+    <string translatable="false" name="provider_gps">gps</string>
+    <string translatable="false" name="provider_network">network</string>
 </resources>

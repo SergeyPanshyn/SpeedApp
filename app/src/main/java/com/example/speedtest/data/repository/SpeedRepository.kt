@@ -13,4 +13,6 @@ interface SpeedRepository {
 
     fun getSpeedInfo(): Single<SpeedInfo>
 
+    fun clearSpeedInfo(): Completable
+
 }

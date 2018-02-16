@@ -20,5 +20,4 @@ interface DashboardPresenter<T>: Presenter<T> {
 
     fun getSpeedInfoModel()
 
-    fun deleteAllChartPoints()
 }
