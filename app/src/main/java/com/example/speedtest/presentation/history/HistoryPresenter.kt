@@ -9,6 +9,10 @@ interface HistoryPresenter<T>: Presenter<T> {
 
     interface HistoryView {
 
+        fun showTrackList(data: List<String>)
+
     }
+
+    fun getTrackList()
 
 }

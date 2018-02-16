@@ -24,7 +24,7 @@ import com.example.speedtest.presentation.history.di.HistoryModule
 import com.example.speedtest.presentation.settings.SettingsFragment
 import com.example.speedtest.presentation.settings.di.SettingsModule
 
-class MainActivity : AppCompatActivity(), SettingsFragment.SettingsListener {
+class MainActivity : AppCompatActivity() {
 
     @BindView(R.id.bottom_navigation_view)
     lateinit var bottomNavigationView: BottomNavigationView
@@ -34,6 +34,8 @@ class MainActivity : AppCompatActivity(), SettingsFragment.SettingsListener {
         val DASHBOARD_FRAGMENT_TAG = "DashboardFragmentTag"
         val SETTINGS_FRAGMENT_TAG = "SettingsFragmentTag"
         val CHART_FRAGMENT_TAG = "ChartFragmentTag"
+        val MAP_FRAGMENT_TAG = "MapFragmentTag"
+        val HISTORY_FRAGMENT_TAG = "HistoryFragmentTag"
     }
 
     val dashboardComponent by lazy { SpeedApp.appComponent?.provideDashboardComponent(DashboardModule()) }
@@ -81,10 +83,6 @@ class MainActivity : AppCompatActivity(), SettingsFragment.SettingsListener {
     private fun setupFragment() {
         bottomNavigationView.menu.getItem(1).isChecked = true
         replaceFragment(DashboardFragment(), DASHBOARD_FRAGMENT_TAG)
-    }
-
-    override fun onProviderChanged() {
-
     }
 
     private fun replaceFragment(fragment: Fragment, tag: String, addToBackStack: Boolean = false) {

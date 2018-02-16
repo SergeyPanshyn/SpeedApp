@@ -45,8 +45,6 @@ class SettingsFragment: Fragment(), SettingsPresenter.SettingsView {
 
     interface SettingsListener {
 
-        fun onProviderChanged()
-
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

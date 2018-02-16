@@ -1,6 +1,7 @@
 package com.example.speedtest.data.db.entity
 
 import android.arch.persistence.room.Entity
+import android.arch.persistence.room.Ignore
 import android.arch.persistence.room.PrimaryKey
 
 /**

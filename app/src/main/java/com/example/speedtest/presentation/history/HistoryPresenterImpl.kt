@@ -7,6 +7,10 @@ class HistoryPresenterImpl<T: HistoryPresenter.HistoryView>: HistoryPresenter<T>
 
     private var view: T? = null
 
+    override fun getTrackList() {
+
+    }
+
     override fun setView(view: T) {
         this.view = view
     }

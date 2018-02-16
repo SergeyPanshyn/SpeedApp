@@ -8,7 +8,7 @@ import android.arch.persistence.room.PrimaryKey
  */
 @Entity
 data class ChartPoint(
-        @PrimaryKey(autoGenerate = true)
+        @PrimaryKey(autoGenerate = true) val id: Int,
         val timestamp: Long,
         val speed: Int
 )
