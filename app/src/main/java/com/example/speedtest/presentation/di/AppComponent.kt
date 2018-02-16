@@ -7,6 +7,8 @@ import com.example.speedtest.presentation.chart.di.ChartComponent
 import com.example.speedtest.presentation.chart.di.ChartModule
 import com.example.speedtest.presentation.dashboard.di.DashboardComponent
 import com.example.speedtest.presentation.dashboard.di.DashboardModule
+import com.example.speedtest.presentation.history.di.HistoryComponent
+import com.example.speedtest.presentation.history.di.HistoryModule
 import com.example.speedtest.presentation.settings.di.SettingsComponent
 import com.example.speedtest.presentation.settings.di.SettingsModule
 import dagger.Component
@@ -22,6 +24,8 @@ interface AppComponent {
     fun provideSettingsComponent(settingModule: SettingsModule): SettingsComponent
 
     fun provideChartComponent(chartModule: ChartModule): ChartComponent
+
+    fun provideHistoryComponent(historyModule: HistoryModule): HistoryComponent
 
     fun inject(speedService: SpeedService)
 

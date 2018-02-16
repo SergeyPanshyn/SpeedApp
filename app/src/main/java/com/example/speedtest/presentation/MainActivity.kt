@@ -20,6 +20,7 @@ import com.example.speedtest.presentation.chart.ChartFragment
 import com.example.speedtest.presentation.chart.di.ChartModule
 import com.example.speedtest.presentation.dashboard.DashboardFragment
 import com.example.speedtest.presentation.dashboard.di.DashboardModule
+import com.example.speedtest.presentation.history.di.HistoryModule
 import com.example.speedtest.presentation.settings.SettingsFragment
 import com.example.speedtest.presentation.settings.di.SettingsModule
 
@@ -38,6 +39,7 @@ class MainActivity : AppCompatActivity(), SettingsFragment.SettingsListener {
     val dashboardComponent by lazy { SpeedApp.appComponent?.provideDashboardComponent(DashboardModule()) }
     val settingsComponent by lazy { SpeedApp.appComponent?.provideSettingsComponent(SettingsModule()) }
     val chartComponent by lazy { SpeedApp.appComponent?.provideChartComponent(ChartModule()) }
+    val historyComponent by lazy { SpeedApp.appComponent?.provideHistoryComponent(HistoryModule()) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
